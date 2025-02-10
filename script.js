@@ -1,34 +1,45 @@
-function showMessage(response) {
-  let videoPlayed = false;
-  if (response === "No") {
-    const noButton = document.getElementById("no-button");
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+let videoPlayed = false;
+
+
+const noButton = document.getElementById("no-button");
     const maxWidth = window.innerWidth - noButton.offsetWidth;
     const maxHeight = window.innerHeight - noButton.offsetHeight;
-
-    // Set the button position to absolute
-    noButton.style.position = "absolute";
-
-    // Change the image source to "gun.gif"
-    document.getElementsByClassName("image")[0].src = "images/gun.gif";
-
-    // Generate random coordinates within the visible container
-    const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
+	noButton.style.position = "absolute";
+	const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
     const randomY = Math.max(0, Math.floor(Math.random() * maxHeight));
 
     // Apply the new coordinates to the button
     noButton.style.left = randomX + "px";
     noButton.style.top = randomY + "px";
+   noButton.addEventListener("mouseover", () => {
+      
 
-    // Update text content and hide the name message
-    document.getElementById("question").textContent =
-      "Choose wisely";
-    document.getElementById("name").style.display = "none";
+      // Generate new random coordinates when the button is hovered
+      const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
+      const randomY = Math.max(0, Math.floor(Math.random() * maxHeight));
 
-    // Add a mouseover event listener to the "No" button
-    noButton.addEventListener("mouseover", () => {
-      if (!videoPlayed) {
+      noButton.style.zIndex = "100";
+      // Apply new coordinates to the button, causing it to move
+      noButton.style.left = randomX + "px";
+      noButton.style.top = randomY + "px";
+    });
+
+function showMessage(response) {
+   
+  
+  
+
+  if (response === "Yes") {
+    // Remove the name message and the "No" button
+    document.getElementById("name").remove();
+    document.getElementById("no-button").remove();
+    const videoElement = document.querySelector("video");
+    if (!videoPlayed) {
         const videoElement = document.createElement("video");
-        videoElement.src = "./Maroon 5 - Sugar.mp4#t=42";
+        videoElement.src = "./Marias.mp4#t=0";
         videoElement.autoplay = true;
         videoElement.controls = false;
         document.body.appendChild(videoElement);
@@ -42,40 +53,17 @@ function showMessage(response) {
         videoPlayed = true;
       }
 
-      // Generate new random coordinates when the button is hovered
-      const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
-      const randomY = Math.max(0, Math.floor(Math.random() * maxHeight));
-
-      noButton.style.zIndex = "100";
-      // Apply new coordinates to the button, causing it to move
-      noButton.style.left = randomX + "px";
-      noButton.style.top = randomY + "px";
-    });
-  }
-
-  if (response === "Yes") {
-    // Remove the name message and the "No" button
-    document.getElementById("name").remove();
-    document.getElementById("no-button").remove();
-    const videoElement = document.querySelector("video");
-    if (videoElement) {
-      videoElement.pause();
-      videoElement.remove();
-    }
-
     // Create an audio element to play the sound
-    const audioElement = document.createElement("audio");
-    audioElement.src = "./Minions Cheering.mp4"; // Source of the sound
-    audioElement.preload = "auto"; // Preloading the audio
-    audioElement.play() // Play the sound
-      .catch(e => console.error("Audio playback failed:", e)); // Catch and log playback errors
+
+
 
     // Update the text content, display the message, and change the image to "dance.gif"
-    const yesMessage = document.getElementById("question");
-    yesMessage.textContent = "See you on the 14th my princess";
+    const yesMessage = document.getElementById("question2");
+	const yesMessage2 = document.getElementById("question");
+	yesMessage2.textContent = "-----------------------------------------------------------------------";
+    yesMessage.textContent = "YESSS! we'll both spend the 14th together baby! SEE YOU ON THE 14th!";
     yesMessage.style.display = "block";
     yesMessage.style.fontStyle = "normal";
-    document.getElementsByClassName("image")[0].src = "images/dance.gif";
 
     // Remove the "Yes" button
     document.getElementById("yesButton").remove();
